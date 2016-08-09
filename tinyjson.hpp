@@ -1,8 +1,8 @@
 /*
- * TinyJson 1.3.0
+ * TinyJson 1.3.1
  * A Minimalistic JSON Reader Based On Boost.Spirit, Boost.Any, and Boost.Smart_Ptr.
  *
- * Copyright (c) 2008 Thomas Jansen (thomas@beef.de)
+ * Copyright (c) 2008-16 Thomas Jansen (thomas.c.jansen@gmail.com)
  *
  * Distributed under the Boost Software License, Version 1.0. (See accompanying
  * file LICENSE_1_0.txt or copy at http://www.boost.org/LICENSE_1_0.txt)
@@ -11,6 +11,7 @@
  *
  * (view source with tab-size = 3)
  *
+ * 09 Aug 2016 - Updated copyright notice and email address (Thomas Jansen)
  * 29 Mar 2008 - use strict_real_p for number parsing, small cleanup (Thomas Jansen)
  * 26 Mar 2008 - made json::grammar a template (Boris Schaeling)
  * 20 Mar 2008 - optimized by using boost::shared_ptr (Thomas Jansen)
