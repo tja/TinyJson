@@ -11,7 +11,8 @@
  *
  * (view source with tab-size = 3)
  *
- * 30 Oct 2017 - Removed namespace and undid the automatic linting that had been applied
+ * 14 Mar 2018 - Added BOOST_SPIRIT debugging macros, adjusted variable names to help, corrected spelling (Jeremy Tudisco)
+ * 30 Oct 2017 - Removed namespace and undid the automatic linting that had been applied (Jeremy Tudisco)
  * 09 Aug 2016 - Updated copyright notice and email address (Thomas Jansen)
  * 29 Mar 2008 - use strict_real_p for number parsing, small cleanup (Thomas Jansen)
  * 26 Mar 2008 - made json::grammar a template (Boris Schaeling)
@@ -20,7 +21,6 @@
  * 04 Jan 2008 - Released to the public (Thomas Jansen)
  * 13 Nov 2007 - initial release (Thomas Jansen) *
  *
- * 29 Mar 2008
  */
 
 
@@ -465,14 +465,14 @@ namespace json
 			{
 				using namespace BOOST_SPIRIT_NS_;
 
-				// 1: an object is an unordered set of pairs (seperated by commas)...
+				// 1: an object is an unordered set of pairs (separated by commas)...
 
 				m_object
 					= ch_p('{') [ begin_object(self.m_stack) ] >>
 					  !(m_pair >> *(ch_p(',') >> m_pair)) >>
 					  ch_p('}') [ end_object  (self.m_stack) ];
 
-				// 2: an array is an ordered collection of values (seperated by commas)...
+				// 2: an array is an ordered collection of values (separated by commas)...
 
 				m_array
 					= ch_p('[')	[ begin_array(self.m_stack) ] >>
@@ -543,6 +543,16 @@ namespace json
 					= str_p("null")
 					  [ push_null(self.m_stack) ]
 					;
+
+
+				BOOST_SPIRIT_DEBUG_RULE(m_object);
+				BOOST_SPIRIT_DEBUG_RULE(m_array);
+				BOOST_SPIRIT_DEBUG_RULE(m_pair);
+				BOOST_SPIRIT_DEBUG_RULE(m_value);
+				BOOST_SPIRIT_DEBUG_RULE(m_string);
+				BOOST_SPIRIT_DEBUG_RULE(m_number);
+				BOOST_SPIRIT_DEBUG_RULE(m_boolean);
+				BOOST_SPIRIT_DEBUG_RULE(m_null);
 			}
 		};
 	};
@@ -558,9 +568,10 @@ namespace json
 		// 1: parse the input...
 
 		typename json::grammar< typename Iterator::value_type >::stack st;
-		json::grammar< typename Iterator::value_type > gr(st);
+		json::grammar< typename Iterator::value_type > jsongrammar(st);
+		BOOST_SPIRIT_DEBUG_GRAMMAR(jsongrammar);
 
-		BOOST_SPIRIT_NS_::parse_info<Iterator> pi = BOOST_SPIRIT_NS_::parse(szFirst, szEnd, gr, BOOST_SPIRIT_NS_::space_p);
+		BOOST_SPIRIT_NS_::parse_info<Iterator> pi = BOOST_SPIRIT_NS_::parse(szFirst, szEnd, jsongrammar, BOOST_SPIRIT_NS_::space_p);
 
 		// 2: skip any spaces at the end of the parsed section...
 
